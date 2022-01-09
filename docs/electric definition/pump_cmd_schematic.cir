@@ -1,0 +1,1808 @@
+[Main]
+FileType=CIR
+Version=12.00
+Program=Micro-Cap
+Component Version=10.00
+Shape Version=11.00
+Screen=1920,1080
+MCAPVersion=12.2.0.0
+Key ID=Demo
+NLCnt=144
+TXCnt=4
+
+[shapedef]
+Name=DOMINO
+Rectangle=8,0,24,16
+FColor=None
+Rectangle=40,0,56,16
+FColor=None
+Line=24,4,40,4
+Line=24,12,40,12
+Line=17,8,8,8
+Line=48,8,56,8
+
+[shapedef]
+Name=PAD
+Rectangle=16,16,32,32
+FColor=None
+
+[shapedef]
+Name=Diode
+Root="Diode.root",0,0,0
+
+[shapedef]
+Name=Diode.root
+Line=0,0,20,0
+Line=28,0,48,0
+Rectangle=18,-8,20,8
+PolyClosed=3
+PolyLine=20,0
+PolyLine=28,-8
+PolyLine=28,8
+Current=32,16,16,16
+
+[shapedef]
+Name=DS18B20
+Rectangle=96,0,208,48
+FColor=None
+Weight=3
+Line=96,8,64,8
+Line=96,24,64,24
+Line=96,40,64,40
+Text="DS18B20\nTEMPERATURE\nSENSOR"
+TextInfo=107,2,198,47 , -12,0,"Arial"
+
+[shapedef]
+Name=Relay_board
+Picture=0,8,336,152
+FColor="E:\Mes documents\Technique\Arduino Kit\Datasheet\Carte relais\simple_schematics.png",Fit_to_Size
+Line=296,-8,296,8
+Line=312,-8,312,24
+Line=328,-8,328,8
+Line=296,8,296,16
+Line=296,16,304,16
+Line=304,16,304,24
+Line=328,8,328,16
+Line=328,16,320,16
+Line=320,16,320,24
+Line=248,168,248,144
+Line=8,128,-16,128
+Line=8,72,-16,72
+Line=248,56,248,-8
+
+[shapedef]
+Name=Inductor
+Line=42,0,48,0
+Line=0,0,5,0
+Arc=5,-7,17,7 , 11,-7,5,0
+Arc=13,-7,25,7 , 19,-7,13,0
+Arc=29,-7,41,7 , 35,-7,29,0
+Arc=21,-7,33,7 , 27,-7,21,0
+Arc=6,-7,18,7 , 18,0,12,-7
+Arc=14,-7,26,7 , 26,0,20,-7
+Arc=22,-7,34,7 , 34,0,28,-7
+Arc=30,-7,42,7 , 42,0,36,-7
+Line=11,-7,12,-7
+Line=19,-7,20,-7
+Line=27,-7,28,-7
+Line=35,-7,36,-7
+Arc=13,-4,17,2 , 13,-1,15,2
+Arc=29,-4,33,2 , 29,-1,31,2
+Arc=21,-4,25,2 , 21,-1,23,2
+Arc=14,-4,18,2 , 16,2,18,-1
+Arc=30,-4,34,2 , 32,2,34,-1
+Arc=22,-4,26,2 , 24,2,26,-1
+Line=15,2,16,2
+Line=23,2,24,2
+Line=31,2,32,2
+Line=5,5,9,5
+Line=41,5,41,9
+Line=39,7,43,7
+Current=32,8,16,8
+
+[shapedef]
+Name=Input
+PolyClosed=5
+PolyLine=8,0
+PolyLine=16,-8
+PolyLine=48,-8
+PolyLine=48,8
+PolyLine=16,8
+FColor=None
+Line=0,0,8,0
+
+[shapedef]
+Name=Output
+PolyClosed=5
+PolyLine=48,0
+PolyLine=40,-8
+PolyLine=8,-8
+PolyLine=8,8
+PolyLine=40,8
+FColor=None
+Line=0,0,8,0
+
+[shapedef]
+Name=ESP32
+Picture=8,-5,120,166
+FColor="E:\Mes documents\Technique\Arduino Kit\Datasheet\ESP32-DEV-KIT\ESP32-DOIT-DEVKIT-V1-Board-Pinout-30-GPIO_simplfieds.png",Fit_to_Size
+Line=120,24,128,24
+Line=128,32,120,32
+Line=128,40,120,40
+Line=128,48,120,48
+Line=128,56,120,56
+Line=128,64,120,64
+Line=128,72,120,72
+Line=128,80,120,80
+Line=128,88,120,88
+Line=128,96,120,96
+Line=128,104,120,104
+Line=128,112,120,112
+Line=128,120,120,120
+Line=120,128,128,128
+Line=120,136,128,136
+Line=8,24,0,24
+Line=8,32,0,32
+Line=8,40,0,40
+Line=8,48,0,48
+Line=8,56,0,56
+Line=8,64,0,64
+Line=8,72,0,72
+Line=8,80,0,80
+Line=8,88,0,88
+Line=8,96,0,96
+Line=8,104,0,104
+Line=8,112,0,112
+Line=8,120,0,120
+Line=8,128,0,128
+Line=8,136,0,136
+Line=59,166,59,176
+Line=68,166,68,176
+
+[shapedef]
+Name=Resistor_Euro
+Rectangle=12,-4,36,4
+FColor=None
+Line=0,0,12,0
+Line=48,0,36,0
+Current=32,8,16,8
+
+[compdef]
+Name=RESSITOR
+Definition=Subckt
+Shape=ESP32
+Mask=4096
+Used=3
+Label Offset=19,-40,10,46
+PinCnt=32
+Pin="GPIO23",d,16,3,6,8
+Pin="GPIO22",d,16,4,6,8
+Pin="GPIO1",d,16,5,6,8
+Pin="GPIO3",d,16,6,6,8
+Pin="GPIO21",d,16,7,6,8
+Pin="GPIO19",d,16,8,6,8
+Pin="GPIO18",d,16,9,6,8
+Pin="GPIO5",d,16,10,6,8
+Pin="GPIO17",d,16,11,6,8
+Pin="GPIO16",d,16,12,6,8
+Pin="GPIO4",d,16,13,6,8
+Pin="GPIO2",d,16,14,6,8
+Pin="GPIO15",d,16,15,6,8
+Pin="GND",d,16,16,6,8
+Pin="3V3",d,16,17,7,8
+Pin="EN",d,0,3,-17,8
+Pin="GPIO36",d,0,4,-37,8
+Pin="GPIO39",d,0,5,-37,8
+Pin="GPIO34",d,0,6,-37,8
+Pin="GPIO35",d,0,7,-37,8
+Pin="GPIO32",d,0,8,-37,8
+Pin="GPIO33",d,0,9,-37,8
+Pin="GPIO25",d,0,10,-37,8
+Pin="GPIO26",d,0,11,-37,8
+Pin="GPIO27",d,0,12,-37,8
+Pin="GPIO14",d,0,13,-37,8
+Pin="GPIO12",d,0,14,-37,8
+Pin="GPIO13",d,0,15,-37,8
+Pin="GND",d,0,16,-26,8
+Pin="VIN",d,0,17,-20,8
+Pin="VBUS",d,7,22,-28,8
+Pin="GND",d,9,22,2,7
+
+[compdef]
+Name=Inductor
+Definition=Inductor
+Shape=Inductor
+Mask=7681
+Used=30
+memo=Inductor
+Label Offset=18,9,11,12
+PinCnt=2
+Pin="Plus",6,0,-5,-9
+Pin="Minus",0,0,-3,-9
+
+[compdef]
+Name=Diode
+Definition=Diode
+Shape=Diode
+Mask=5377
+Used=19
+memo=Diode
+Label Offset=17,10,12,12
+PinCnt=2
+Pin="Anode",6,0,-9,-8
+Pin="Cathode",0,0,-20,-8
+
+[compdef]
+Name=Relay_board
+Definition=Subckt
+Shape=Relay_board
+Mask=20480
+Used=1
+Label Offset=93,-33,7,97
+PinCnt=7
+Pin="VCC",d,-2,9,-7,-8
+Pin="IN1",d,-2,16,-7,-7
+Pin="GND",d,31,21,3,-1
+Pin="JD-VCC",d,31,-1,-41,13
+Pin="NC",d,41,-1,4,14
+Pin="C",d,39,-1,3,14
+Pin="NO",d,37,-1,-18,13
+
+[compdef]
+Name=DS18B20
+Definition=Subckt
+Shape=DS18B20
+Mask=4096
+Used=1
+memo=one wire temperature sensor
+Label Offset=0,0,0,0
+PinCnt=3
+Pin="VCC",d,8,1
+Pin="GND",d,8,3
+Pin="DATA",d,8,5
+
+[compdef]
+Name=Input Port
+Definition=Tie
+Shape=Input
+Mask=28672
+Used=14
+memo=Input Port connector used to tie nodes together
+Label Offset=17,8,10,18
+PinCnt=1
+Pin="PinA",0,0,-13,-1
+
+[compdef]
+Name=Output Port
+Definition=Tie
+Shape=Output
+Mask=4096
+Used=23
+memo=Output Port connector used to tie nodes together
+Label Offset=17,8,10,18
+PinCnt=1
+Pin="PinA",0,0,-16,-1
+
+[compdef]
+Name=Resistor
+Definition=Resistor
+Shape=Resistor_Euro
+Mask=6401
+Used=222
+memo=Resistor
+Label Offset=18,6,8,11
+PinCnt=2
+Pin="Plus",6,0,-10,-4
+Pin="Minus",0,0,-14,-4
+
+[compdef]
+Name=PAD
+Definition=Subckt
+Shape=PAD
+Mask=6144
+Used=57
+Label Offset=9,-18,-4,10
+PinCnt=1
+Pin="P",a,3,3
+
+[compdef]
+Name=Domino
+Definition=Subckt
+Shape=DOMINO
+Mask=4096
+Used=11
+Label Offset=-7,23,11,14
+PinCnt=2
+Pin="2",a,6,1
+Pin="1",a,2,1
+
+[Circuit]
+Window Placement=2,3, -1,-1, -8,-31, 78,78,1533,654
+Default Object=Color=#000080
+Default Object Font=Height=-15,FStyle=0,Color=#000080,Name=Arial
+Default Object Apply Border To Text=No
+Default Object Apply Fill To Text=No
+Default Object GridSnap=No
+NodeVoltageFormat=3
+CurrentFormat=3
+PowerFormat=3
+PathDelayFormat=3
+WarningFormat=3
+GridTextFormulaFormat=3
+SpiceType=AMBIGUOUS
+Title_Block_Border=None
+Title_Block=False
+Show Nodes=False
+Show Voltages=False
+Show Current=False
+Show Power=False
+Show Condition=False
+Show Pin Connections=False
+Show Connection Warnings=False
+Show Cross=False
+Show Attribute Text=True
+Show Grid Text=True
+
+[Object]
+Object=Rectangle
+CBorder=#000080
+Px=972,769,1264,796
+
+[Object]
+Object=Rectangle
+CBorder=#000080
+Px=261,747,415,818
+
+[Object]
+Object=Rectangle
+CBorder=#000080
+Px=360,446,426,610
+
+[Object]
+Object=Rectangle
+Weight=2
+CBorder=#000080
+Px=213,409,1348,899
+
+[Object]
+Object=Rectangle
+CBorder=#000080
+Px=735,471,804,537
+
+[Object]
+Object=Rectangle
+Weight=2
+CBorder=#000080
+Px=43,447,202,643
+
+[Comp]
+Name=RESSITOR
+Px=928,544
+
+[Attr]
+ON=25,-24,PART
+V=ESP32
+Style=8192
+
+[Attr]
+ON=19,-26,NAME
+V=ESP32_WROOM32
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Comp]
+Name=Inductor
+Px=760,528
+Rot=3
+
+[Attr]
+ON=-26,-75,PART
+V=SUPPLY 5.2V
+Style=8192
+
+[Attr]
+ON=0,0,INDUCTANCE
+V
+Style=8192
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Comp]
+Name=Diode
+Px=784,528
+Rot=5
+
+[Attr]
+ON=12,-26,PART
+V
+Style=8192
+
+[Attr]
+ON=12,-40,MODEL
+V=$GENERIC
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=808,520,864,520
+
+[Wire]
+Pxs=864,520,864,744
+
+[Wire]
+Pxs=864,744,1000,744
+
+[Wire]
+Pxs=1000,720,1000,744
+
+[Wire]
+Pxs=808,488,880,488
+
+[Wire]
+Pxs=880,488,880,728
+
+[Wire]
+Pxs=880,728,984,728
+
+[Wire]
+Pxs=984,720,984,728
+
+[Comp]
+Name=Relay_board
+Style=ShowPinText
+Px=488,616
+
+[Attr]
+ON=44,-11,PART
+V=Relay board
+Style=8192
+
+[Attr]
+ON=93,-19,NAME
+V=Relay_board
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=440,688,472,688
+Color=#FF0000
+
+[Wire]
+Pxs=440,688,440,816
+Color=#FF0000
+
+[Wire]
+Pxs=440,816,1152,816
+Color=#FF0000
+
+[Wire]
+Pxs=1056,680,1096,680
+Color=#FF0000
+
+[Wire]
+Pxs=736,584,736,608
+Color=#F86100
+
+[Wire]
+Pxs=736,584,848,584
+Color=#F86100
+
+[Wire]
+Pxs=848,584,848,680
+Color=#F86100
+
+[Wire]
+Pxs=848,680,928,680
+Color=#F86100
+
+[Wire]
+Pxs=896,656,928,656
+Color=#808080
+
+[Wire]
+Pxs=896,656,896,800
+Color=#808080
+
+[Wire]
+Pxs=456,800,896,800
+Color=#808080
+
+[Wire]
+Pxs=456,744,456,800
+Color=#808080
+
+[Wire]
+Pxs=456,744,472,744
+Color=#808080
+
+[Wire]
+Pxs=912,672,928,672
+Color=#000000
+
+[Comp]
+Name=DS18B20
+Style=ShowPinText
+Px=1320,576
+
+[Attr]
+ON=148,-20,PART
+V=X3
+Style=8192
+
+[Attr]
+ON=0,14,NAME
+V=DS18B20
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Comp]
+Name=Input Port
+Px=1264,584
+
+[Attr]
+ON=17,8,PART
+V=VCC
+Style=8192
+
+[Comp]
+Name=Input Port
+ShowPackagePins=True
+Px=1264,624
+
+[Attr]
+ON=23,7,PART
+V=GND
+Style=8192
+
+[Comp]
+Name=Input Port
+ShowPackagePins=True
+Px=1264,664
+
+[Attr]
+ON=17,8,PART
+V=DATA
+Style=8192
+
+[Wire]
+Pxs=1080,624,1200,624
+Color=#000000
+
+[Wire]
+Pxs=1320,600,1320,624
+
+[Wire]
+Pxs=1320,600,1384,600
+
+[Wire]
+Pxs=1336,616,1336,664
+
+[Wire]
+Pxs=1336,616,1384,616
+
+[Wire]
+Pxs=896,648,928,648
+Weight=2
+Color=#FDD844
+
+[Wire]
+Pxs=896,496,896,648
+Weight=2
+Color=#FDD844
+
+[Wire]
+Pxs=896,496,1160,496
+Weight=2
+Color=#FDD844
+
+[Wire]
+Pxs=1160,496,1160,728
+Weight=2
+Color=#FDD844
+
+[Wire]
+Pxs=784,552,784,600
+
+[Wire]
+Pxs=272,520,376,520
+
+[Wire]
+Pxs=264,520,272,520
+
+[Comp]
+Name=Input Port
+Px=272,520
+Rot=6
+
+[Attr]
+ON=-41,13,PART
+V=PP
+Style=8192
+
+[Comp]
+Name=Input Port
+Px=272,480
+Rot=6
+
+[Attr]
+ON=-41,13,PART
+V=N
+Style=8192
+
+[Comp]
+Name=Input Port
+Px=272,568
+Rot=6
+
+[Attr]
+ON=-41,13,PART
+V=P1
+Style=8192
+
+[Wire]
+Pxs=272,480,376,480
+
+[Comp]
+Name=Input Port
+Px=272,616
+Rot=6
+
+[Attr]
+ON=-41,13,PART
+V=G
+Style=8192
+
+[Comp]
+Name=Output Port
+Px=392,840
+Rot=7
+
+[Attr]
+ON=19,18,PART
+V=P2
+Style=8192
+
+[Comp]
+Name=Output Port
+Px=344,840
+Rot=7
+
+[Attr]
+ON=19,18,PART
+V=N
+Style=8192
+
+[Comp]
+Name=Output Port
+Px=296,840
+Rot=7
+
+[Attr]
+ON=19,18,PART
+V=G
+Style=8192
+
+[Wire]
+Pxs=800,568,800,600
+
+[Wire]
+Pxs=272,568,376,568
+
+[Wire]
+Pxs=272,616,296,616
+
+[Wire]
+Pxs=296,616,296,768
+
+[Wire]
+Pxs=392,640,392,768
+
+[Wire]
+Pxs=1264,664,1336,664
+
+[Wire]
+Pxs=1264,624,1320,624
+
+[Wire]
+Pxs=1264,584,1384,584
+
+[Wire]
+Pxs=752,928,800,928
+
+[Comp]
+Name=Resistor
+Px=1184,848
+
+[Attr]
+ON=15,7,PART
+V=R1
+Style=8192
+
+[Attr]
+ON=13,20,RESISTANCE
+V=4k7
+Style=8192
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Comp]
+Name=PAD
+Px=760,576
+
+[Attr]
+ON=-8,14,PART
+V=X11
+Style=8192
+
+[Attr]
+ON=0,0,NAME
+V
+Style=8192
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=784,600,784,608
+
+[Comp]
+Name=PAD
+Px=776,576
+
+[Attr]
+ON=36,13,PART
+V=X12
+Style=8192
+
+[Attr]
+ON=0,0,NAME
+V
+Style=8192
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=800,600,800,608
+
+[Wire]
+Pxs=512,536,512,552
+
+[Wire]
+Pxs=512,552,784,552
+
+[Wire]
+Pxs=344,664,344,768
+
+[Comp]
+Name=Domino
+Px=360,472
+
+[Attr]
+ON=-7,23,PART
+V=X15
+Style=8192
+
+[Attr]
+ON=-7,37,NAME
+V=Domino
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=408,480,736,480
+
+[Comp]
+Name=Domino
+Px=360,512
+
+[Attr]
+ON=-7,23,PART
+V=X16
+Style=8192
+
+[Attr]
+ON=-7,37,NAME
+V=Domino
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=408,520,736,520
+
+[Wire]
+Pxs=512,536,408,520
+
+[Wire]
+Pxs=408,480,456,496
+
+[Wire]
+Pxs=456,496,456,664
+
+[Wire]
+Pxs=344,664,456,664
+
+[Comp]
+Name=Domino
+Px=360,560
+
+[Attr]
+ON=-7,23,PART
+V=X17
+Style=8192
+
+[Attr]
+ON=-7,37,NAME
+V=Domino
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=408,568,800,568
+
+[Wire]
+Pxs=408,568,440,600
+
+[Wire]
+Pxs=440,600,440,640
+
+[Wire]
+Pxs=392,640,440,640
+
+[Comp]
+Name=Domino
+Px=384,816
+Rot=3
+
+[Attr]
+ON=20,-34,PART
+V=X18
+Style=8192
+
+[Attr]
+ON=-7,37,NAME
+V=Domino
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=392,800,392,840
+
+[Comp]
+Name=Domino
+Px=336,816
+Rot=3
+
+[Attr]
+ON=20,-34,PART
+V=X19
+Style=8192
+
+[Attr]
+ON=-7,37,NAME
+V=Domino
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=344,800,344,840
+
+[Comp]
+Name=Domino
+Px=288,816
+Rot=3
+
+[Attr]
+ON=20,-34,PART
+V=X20
+Style=8192
+
+[Attr]
+ON=-7,37,NAME
+V=Domino
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=296,800,296,840
+
+[Comp]
+Name=Domino
+Px=848,936
+Rot=2
+
+[Attr]
+ON=-6,13,PART
+V=X21
+Style=8192
+
+[Attr]
+ON=-7,37,NAME
+V=Domino
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=832,928,864,928
+
+[Comp]
+Name=Domino
+Px=1248,592
+Rot=2
+
+[Attr]
+ON=-6,13,PART
+V=X22
+Style=8192
+
+[Attr]
+ON=-7,37,NAME
+V=Domino
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=1232,584,1264,584
+
+[Comp]
+Name=Domino
+Px=1248,632
+Rot=2
+
+[Attr]
+ON=-6,13,PART
+V=X23
+Style=8192
+
+[Attr]
+ON=-7,37,NAME
+V=Domino
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=1232,624,1264,624
+
+[Comp]
+Name=Domino
+Px=1248,672
+Rot=2
+
+[Attr]
+ON=-6,13,PART
+V=X24
+Style=8192
+
+[Attr]
+ON=-7,37,NAME
+V=Domino
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=1232,664,1264,664
+
+[Comp]
+Name=PAD
+Px=1128,760
+
+[Attr]
+ON=28,40,PART
+V=X25
+Style=8192
+
+[Attr]
+ON=9,-4,NAME
+V=PAD
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Comp]
+Name=PAD
+Px=1160,760
+
+[Attr]
+ON=27,40,PART
+V=X26
+Style=8192
+
+[Attr]
+ON=9,-4,NAME
+V=PAD
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Comp]
+Name=PAD
+Px=1192,760
+
+[Attr]
+ON=27,40,PART
+V=X27
+Style=8192
+
+[Attr]
+ON=9,-4,NAME
+V=PAD
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Comp]
+Name=PAD
+Px=1224,760
+
+[Attr]
+ON=20,40,PART
+V=X28
+Style=8192
+
+[Attr]
+ON=9,-4,NAME
+V=PAD
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Comp]
+Name=PAD
+Px=1096,760
+
+[Attr]
+ON=13,39,PART
+V=X29
+Style=8192
+
+[Attr]
+ON=9,-4,NAME
+V=PAD
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=1152,784,1152,816
+Color=#FF0000
+
+[Wire]
+Pxs=1096,680,1096,744
+Color=#FF0000
+
+[Wire]
+Pxs=1152,784,1184,784
+Color=#FF0000
+
+[Wire]
+Pxs=1216,728,1216,784
+Weight=2
+Color=#FDD844
+
+[Wire]
+Pxs=1160,728,1216,728
+Weight=2
+Color=#FDD844
+
+[Wire]
+Pxs=1184,784,1184,824
+Color=#FF0000
+
+[Wire]
+Pxs=1232,824,1232,848
+Weight=2
+Color=#FDD844
+
+[Wire]
+Pxs=1216,824,1232,824
+Weight=2
+Color=#FDD844
+
+[Wire]
+Pxs=1216,784,1216,824
+Weight=2
+Color=#FDD844
+
+[Wire]
+Pxs=1248,712,1248,784
+Weight=2
+Color=#FDD844
+
+[Wire]
+Pxs=1176,712,1248,712
+Weight=2
+Color=#FDD844
+
+[Wire]
+Pxs=1176,664,1176,712
+Weight=2
+Color=#FDD844
+
+[Wire]
+Pxs=1176,664,1200,664
+Weight=2
+Color=#FDD844
+
+[Wire]
+Pxs=1216,784,1248,784
+Weight=2
+Color=#FDD844
+
+[Comp]
+Name=PAD
+Px=1032,760
+
+[Attr]
+ON=15,39,PART
+V=X30
+Style=8192
+
+[Attr]
+ON=9,-4,NAME
+V=PAD
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Comp]
+Name=PAD
+Px=1000,760
+
+[Attr]
+ON=16,39,PART
+V=X31
+Style=8192
+
+[Attr]
+ON=9,-4,NAME
+V=PAD
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=1024,784,1056,784
+Color=#000000
+
+[Wire]
+Pxs=1080,624,1080,752
+Color=#000000
+
+[Comp]
+Name=PAD
+Px=968,760
+
+[Attr]
+ON=14,40,PART
+V=X32
+Style=8192
+
+[Attr]
+ON=9,-4,NAME
+V=PAD
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=992,784,1024,784
+Color=#000000
+
+[Wire]
+Pxs=912,672,912,784
+Color=#000000
+
+[Wire]
+Pxs=1024,728,1024,784
+Color=#000000
+
+[Wire]
+Pxs=1120,784,1152,784
+Color=#FF0000
+
+[Wire]
+Pxs=1184,744,1184,784
+Color=#FF0000
+
+[Wire]
+Pxs=1136,744,1184,744
+Color=#FF0000
+
+[Wire]
+Pxs=1136,584,1136,744
+Color=#FF0000
+
+[Wire]
+Pxs=1136,584,1200,584
+Color=#FF0000
+
+[Wire]
+Pxs=1056,752,1056,784
+Color=#000000
+
+[Wire]
+Pxs=1056,752,1080,752
+Color=#000000
+
+[Wire]
+Pxs=1096,744,1120,744
+Color=#FF0000
+
+[Wire]
+Pxs=1120,744,1120,784
+Color=#FF0000
+
+[Comp]
+Name=PAD
+Px=1064,760
+
+[Attr]
+ON=13,39,PART
+V=X33
+Style=8192
+
+[Attr]
+ON=9,-4,NAME
+V=PAD
+
+[Attr]
+ON=0,0,PACKAGE
+V
+
+[Wire]
+Pxs=1168,848,1184,848
+Color=#FF0000
+
+[Wire]
+Pxs=1168,824,1168,848
+Color=#FF0000
+
+[Wire]
+Pxs=1168,824,1184,824
+Color=#FF0000
+
+[Wire]
+Pxs=736,784,912,784
+Color=#000000
+
+[Wire]
+Pxs=1056,672,1064,672
+Color=#000000
+
+[Wire]
+Pxs=1064,672,1064,728
+Color=#000000
+
+[Wire]
+Pxs=1024,728,1064,728
+Color=#000000
+
+[Grid Text]
+Text="Boitier de"
+Text="raccordement"
+Text="Desjoyaux"
+Px=128,576
+Height=-18
+GridSnap=True
+JustifyH=Center
+JustifyV=Bottom
+CBorder=None
+
+[Grid Text]
+Text="Vers"
+Text="Pompe"
+Px=344,952
+Height=-18
+GridSnap=True
+JustifyH=Center
+JustifyV=Bottom
+CBorder=None
+
+[Grid Text]
+Text="Boitier ESP32"
+Px=544,448
+Height=-18
+GridSnap=True
+JustifyH=Center
+JustifyV=Bottom
+CBorder=None
+
+[Grid Text]
+Text="domino"
+Px=920,936
+Height=-18
+GridSnap=True
+JustifyH=Center
+JustifyV=Bottom
+CBorder=None
+
+[Schematic]
+CurrentSection 0=0
+CurrentSection 1=0
+CurrentSection 2=0
+CurrentSection 3=0
+Splitter.xs=0
+Splitter.ys=0
+TextQuad=4099
+Scale=0.5
+GridUser=10
+ShapeGroups="Main","Euro","Polarity","Main1","Main11","Electrolytic","GroundArrow","DeMorgan"
+CalcRMS=False
+CalcAVG=False
+CalcPeak=False
+CalcVoltage=True
+DisplayMeasure=Last
+ShareScales=True
+
+[Tools]
+Pos=Top
+FILESAVEASOLD=No
+BOM=No
+FILEPCB=No
+PROBE=Yes
+SELECT=Yes
+PAN=Yes
+COMP=Yes
+TEXT=Yes
+WIRE=Yes
+WIRED=Yes
+BUS=Yes
+GRAPHIC=Yes
+FLOWCHART=Yes
+LINE=No
+ELLIPSE=No
+RECT=No
+DIAM=No
+ARC=No
+PIE=No
+TRIANGLE=No
+STAR=No
+LEFTBRK=No
+RIGHTBRK=No
+BOTHBRK=No
+META=No
+PARALLELOGRAM=No
+FC_PROCESS=No
+FC_ALT_PROCESS=No
+FC_DECISION=No
+FC_DATA=No
+FC_PREDEFPROCESS=No
+FC_INTERNALSTORAGE=No
+FC_DOCUMENT=No
+FC_MULTIDOCUMENT=No
+FC_TERMINATOR=No
+FC_PREPARATION=No
+FC_MANUALINPUT=No
+FC_MANUALOPERATION=No
+FC_CONNECTOR=No
+FC_OFFPAGECONNECTOR=No
+FC_PUNCHCARD=No
+FC_PUNCHEDTAPE=No
+FC_SUMMING_JUNCTION=No
+FC_OR=No
+FC_COLLATE=No
+FC_SORT=No
+FC_EXTRACT=No
+FC_MERGE=No
+FC_STORED_DATA=No
+FC_DELAY=No
+FC_SAS=No
+FC_MAGNETIC_DISK=No
+FC_DAS=No
+FC_DISPLAY=No
+SPREAD_SHEET=Yes
+POLYCLOS=No
+POLYOPEN=No
+FLAG=Yes
+INFO=Yes
+HELP=Yes
+HELP_SPICE=No
+LINK=Yes
+CHECK=Yes
+REGION_ENABLE=Yes
+TITLE_BLOCK=Yes
+DIGTRC=No
+DIGTRC2=No
+BUILD_COMMAND=Yes
+DIGALL=No
+GRIDTEXT=Yes
+COMPTEXT=Yes
+NODE=Yes
+MEASURED=Yes
+NODEV=Yes
+CURRENT=Yes
+POWER=Yes
+CONDITIN=Yes
+PIN=Yes
+CONNWARN=Yes
+CROSS=No
+GRID=Yes
+BORDER=Yes
+BORDERONE=Yes
+TITLE=Yes
+RUBBER=Yes
+PROPERTY=Yes
+STEP=Yes
+MIRROR=Yes
+ROTATE=Yes
+FLIPY=Yes
+FLIPX=Yes
+CIR_MAKEMACRO=No
+CLEARCUTWIRE=No
+CLIPBOARDCIRPAGE2BMM=No
+FINDCOMP=Yes
+FIND=Yes
+REPEAT=No
+REPLACE=No
+MODEL=Yes
+CIR2CKT=No
+ATTDISP=No
+ENABLE=Yes
+DISABLE=Yes
+ENABLE_WITH=Yes
+TOFRONT=Yes
+TOBACK=Yes
+SELNEXT=No
+PAGEADD=No
+PAGEADDTEXT=No
+ADDSECTION=No
+PAGEDEL=No
+ZOOMIN=Yes
+ZOOMOUT=Yes
+AUTOSCALECIR=Yes
+GOTOFLAG=No
+UPLEVEL=Yes
+COLOR=Yes
+FONT=Yes
+STYLE=Yes
+DM_LAST=No
+DM_RMS=No
+DM_AVG=No
+DM_PEAK=No
+GRID_NONE=No
+GRID_NORMAL=No
+GRID_BOLD_5=No
+GRID_BOLD_6=No
+GRID_BOLD_USER=No
+GRAPH_PAPER=No
+SPLITCIRTEXTH=No
+SPLITCIRTEXTV=No
+SPACE_SPLITTERS_EVENLY=No
+NORMALCIR=No
+RENAMEDEFINE=No
+RENAMECMP=No
+ATTALIGN=No
+RESETNODEPOS=No
+FIT2STANDARD=No
+NODESNAP=No
+MOVETEXT=No
+TEXTINC=No
+TOGGLETEXT=No
+TOGGLEMODE=No
+TOLERANCE=No
+ALIGNAB=No
+ALIGNLEFT=No
+ALIGNCENTER=No
+ALIGNRIGHT=No
+ALIGNTOP=No
+ALIGNMIDDLES=No
+ALIGNBOTTOM=No
+
+[Section]
+Index=0
+Name="pump_cmd_schematic"
+Type=Main
+Enable=True
+CurrentPage 0=0
+CurrentPage 1=0
+CurrentPage 2=0
+CurrentPage 3=0
+TabSize 0=425
+TabSize 1=425
+TabSize 2=425
+TabSize 3=425
+
+[Page]
+Index=0
+Section=0
+Print=True
+Enable=True
+Name=Main
+PrinterScale=-1
+Scale 0=1
+Scale 1=1
+Scale 2=1
+SB 3=576,490
+Scale 3=0.5
+Px=740,871
+WinBackGround Color=#FFFFFF
+Select Color=#FF0000
+Anchor Color=#000000
+Select Box Color=#000080
+Grid Text Color=Height=-12,FStyle=0,Color=#0000FF,Name=Verdana
+Grid Text RTF=False
+Grid Text Angle=0
+Grid Text GridSnap=True
+Grid Text PinIt=False
+Grid Text JustifyH=Left
+Grid Text JustifyV=Bottom
+Grid GradientColor2=None
+Grid OutlineThickness=1
+Grid OutlineColor=None
+Component Color=#0000FF
+Attribute Text=Height=-12,FStyle=0,Color=#008000,Name=Verdana
+Wire Color=#008000
+Bus Color=#008000
+Pin Connection=Height=-10,FStyle=0,Color=#FF0000,Name=Arial
+Pin Marker Color=#008000
+Node Number=Height=-11,FStyle=0,Color=#FF00FF,Name=Arial
+Node Voltage Color=Height=-11,FStyle=0,Color=#000000,Name=Arial
+Dynamic AC Voltage Color=#E4E4E4
+Text Banner Text=Height=-15,FStyle=0,Color=#800000,Name=Arial
+Title Block Background=#C0C0C0
+Current=Height=-11,FStyle=0,Color=#0000FF,Name=Arial
+Power/Condition=Height=-11,FStyle=0,Color=#FF0000,Name=Arial
+Digital Path Color=#FF0000
+Title Block Border=#000000
+Disabled	Color=#C0C0C0
+Search Color=#FFFF00
+Grid Color=#000000
+Graph Paper=#E4E4E4
+Digital 0 Color=#000000
+Digital R Color=#FFFF00
+Digital F Color=#FFFF00
+Digital 1 Color=#FF0000
+Digital X Color=#C0C0C0
+Digital Z Color=#808080
+Block Select Color=#51F998
+
+[Page]
+Index=1
+Section=0
+Type=Text
+Print=False
+Enable=True
+Name=Text
+Font=Height=-15,FStyle=0,Color=#000000,Name=Courier New
+Comment Color=#008000
+WinBackGround Color=#FFFFFF
+Disabled	Color=#C0C0C0
+KeyWord Color=#0000FF
+Error	Color=#FF0000
+Search Color=#FFFF00
+
+[Page]
+Index=2
+Section=0
+Type=Text
+Print=False
+Enable=True
+Name=Models
+Font=Height=-15,FStyle=0,Color=#000000,Name=Courier New
+Comment Color=#008000
+WinBackGround Color=#FFFFFF
+Disabled	Color=#C0C0C0
+KeyWord Color=#0000FF
+Error	Color=#FF0000
+Search Color=#FFFF00
+
+[Page]
+Index=3
+Section=0
+Type=Info
+Print=False
+Enable=True
+Name=Info
+Font=Height=-15,FStyle=0,Color=#000000,Name=Courier New
+Comment Color=#008000
+WinBackGround Color=#FFFFFF
+Disabled	Color=#C0C0C0
+KeyWord Color=#0000FF
+Error	Color=#FF0000
+Search Color=#FFFF00
+
+[Text Area]
+Section=0
+Page=1
+
+[Text Area]
+Section=0
+Page=2
+Text=* Schematic File
+Text=*
+Text=* Syntax:
+Text=* .MODEL <model name> [AKO:<reference model name>] <ModelType>
+Text=* +([<parameter name>=<value>][LOT[/#][/GAUSS|/UNIFORM|/WCASE]=[<tol>[%]] |[-<low>%,<high>%]][DEV[/#][/GAUSS|/UNIFORM|/WCASE]=[<tol>[%]]...)
+Text=* ModelType must be one of OPA,D,NPN,NMOS,NJF,PUL,SIN,TRN,CORE,GASFET,VSWITCH,ISWITCH,CAP,IND,RES,PNP,PMOS,PJF,DOUTPUT,DINPUT,UADC,UDAC,UGATE,UTGATE,UEFF,UGFF,UDLY,UPLD,UROM,URAM,UBGT,UIO,LPNP,NIGBT,I,V
+Text=*
+Text=*Examples:
+Text=* .MODEL 2N2222A NPN(BF=150 IS=1E-14)
+Text=* .model M1 NMOS(KP=2.5E-5 VTO=1.345 CGDO=14.67p CGBO=4.566p)
+Text=* .MODEL DK D(IS=1E-18)
+Text=* .model 2N2222A AKO:2N2222 NPN (BF=55 ISE=10F)
+Text=* .Model BJT1 NPN (RE=12 LOT/1/GAUSS=30% DEV/2/UNIFORM=2%)
+Text=*
+Text=* A .cir file is typically found in the data directory
+Text=*
+Text=.SUBCKT x P
+Text=.ENDS x
+Text=.SUBCKT Name P
+Text=.ENDS Name
+Text=.SUBCKT Name P
+Text=.ENDS Name
+Text=.SUBCKT Name P
+Text=.ENDS Name
+Text=.SUBCKT Name P
+Text=.ENDS Name
+Text=.SUBCKT Name P
+Text=.ENDS Name
+Text=.SUBCKT Name P
+Text=.ENDS Name
+Text=.SUBCKT Name P
+Text=.ENDS Name
+Text=.SUBCKT Name P
+Text=.ENDS Name
+Text=.SUBCKT Name P
+Text=.ENDS Name
+
+[InfoPage]
+InfoPage=True
+Warnings=True
+System=True
+Defines=True
+Array=True
+Model=True
+Measure=True
+MacroSubckt=True
+NotUsed=True
+ComponentCounts=True
+VariablizePaths=False
+DontShowPaths=False
+SimulationLog=True
+
+[Limits]
+Analysis=DynamicAC
+FirstValueDisplay=Mag
+SecondValueDisplay=PhaseDeg
+PlaceText=True
+
+[Limits]
+Analysis=DynamicDC
+PlaceText=True
+
+[Pane]
+Analysis=Transient
+
+[Pane]
+Analysis=AC
+
+[Pane]
+Analysis=DC
+
+[Pane]
+Analysis=HmDistortion
+
+[Pane]
+Analysis=ImDistortion
+
+[Pane]
+Analysis=Stability
+
+[WCTolerance]
+Var Width=100
+Nominal Width=72
+Tol Width=152
+Tol Name=Drift
+Col Width Neq=50
+Col Width Pos=50
+Col Width Rnd=50
+
+[WCFiles]
+UseFile=<Library>Standard.tlib
+AVAILABLE_FILE=<Library>Standard.tlib
+
+[OPMethods]
+Analysis=Transient
+Standard Newton-Raphson=0,0
+Source Stepping=0,0
+Diagonal Gmin Stepping=0,0
+Junction Gmin Stepping=0,0
+Pseudo Transient=0,0
+
+[OPMethods]
+Analysis=AC
+Standard Newton-Raphson=0,0
+Source Stepping=0,0
+Diagonal Gmin Stepping=0,0
+Junction Gmin Stepping=0,0
+Pseudo Transient=0,0
+
+[OPMethods]
+Analysis=DC
+Standard Newton-Raphson=0,0
+Source Stepping=0,0
+Diagonal Gmin Stepping=0,0
+Junction Gmin Stepping=0,0
+Pseudo Transient=0,0
+
+[OPMethods]
+Analysis=HmDistortion
+Standard Newton-Raphson=0,0
+Source Stepping=0,0
+Diagonal Gmin Stepping=0,0
+Junction Gmin Stepping=0,0
+Pseudo Transient=0,0
+
+[OPMethods]
+Analysis=ImDistortion
+Standard Newton-Raphson=0,0
+Source Stepping=0,0
+Diagonal Gmin Stepping=0,0
+Junction Gmin Stepping=0,0
+Pseudo Transient=0,0
+
+[OPMethods]
+Analysis=Stability
+Standard Newton-Raphson=0,0
+Source Stepping=0,0
+Diagonal Gmin Stepping=0,0
+Junction Gmin Stepping=0,0
+Pseudo Transient=0,0
+
+[OPMethods]
+Analysis=DynamicAC
+Standard Newton-Raphson=0,0
+Source Stepping=0,0
+Diagonal Gmin Stepping=0,0
+Junction Gmin Stepping=0,0
+Pseudo Transient=0,0
+
+[OPMethods]
+Analysis=DynamicDC
+Standard Newton-Raphson=0,0
+Source Stepping=0,0
+Diagonal Gmin Stepping=0,0
+Junction Gmin Stepping=0,0
+Pseudo Transient=0,0
