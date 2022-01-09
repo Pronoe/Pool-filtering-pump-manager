@@ -1,0 +1,145 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+# Last modification: 08/01/2022
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+mqtt:
+  broker: localhost
+  port: 8883
+  username: pronoe
+  password: ryf15nbn
+
+sensor:
+  - platform: mqtt
+    name: 'Date/heure'
+    state_topic: 'CONTROLER_RUNNING_TIME'
+    unit_of_measurement: ""
+    value_template: "{{ value_json.Time }}"
+  - platform: mqtt
+    name: 'Pump controler: date and time of last power ON or restart'
+    state_topic: 'CONTROLER_RUNNING_TIME'
+    unit_of_measurement: ''
+    value_template: "{{ value_json.Last_power_ON_date_and_time }}"
+  - platform: mqtt
+    name: 'Pump controler cumulative running time'
+    state_topic: 'CONTROLER_RUNNING_TIME'
+    unit_of_measurement: 's'
+    value_template:  "{{ value_json.Power_ON.Cumulative_ON_time }}"
+  - platform: mqtt
+    name: 'Pump controler: current running time'
+    state_topic: 'CONTROLER_RUNNING_TIME'
+    unit_of_measurement: 's'
+    value_template: "{{ value_json.Power_ON.Current_ON_time }}"
+  - platform: mqtt
+    name: 'Pump controler: previous sequence running time'
+    state_topic: 'CONTROLER_RUNNING_TIME'
+    unit_of_measurement: 's'
+    value_template: "{{ value_json.Power_ON.ON_time_previous_sequence }}"
+  - platform: mqtt
+    name: 'Pump controler: before previous sequence running time'
+    state_topic: 'CONTROLER_RUNNING_TIME'
+    unit_of_measurement: 's'
+    value_template: "{{ value_json.Power_ON.ON_time_before_previous_sequence }}"
+  - platform: mqtt
+    name: 'Pump controler: number of power ON or restart'
+    state_topic: 'CONTROLER_RUNNING_TIME'
+    unit_of_measurement: ''
+    value_template: "{{ value_json.Power_ON.Number_of_power_ON_or_restart }}"
+  - platform: mqtt
+    name: "Pool water temperature"
+    state_topic: "WATER_TEMP"
+    unit_of_measurement: '°C'
+  - platform: mqtt
+    name: "Pump controler event"
+    state_topic: "PUMP_CONTROLER_EVENT"
+    unit_of_measurement: ''
+  
+binary_sensor:
+  - platform: mqtt
+    name: 'Pool filtering pump state'
+    state_topic: 'PUMP_STATE'
+    payload_on: "ON"
+    payload_off: "OFF"
+    device_class: running
+
+button:
+  - platform: mqtt
+    name: "Pump activation"
+    command_topic: "cmnd_ON/PUMP"
+    qos: 0
+    retain: true
+    payload_press: "PRESS"
+  - platform: mqtt
+    name: "Pump stop"
+    command_topic: "cmnd_OFF/PUMP"
+    qos: 0
+    retain: true
+    payload_press: "PRESS"
+
+# NOTE:
+  # - define durations for the various UNITs of time
+  #   * modulus helps to reduce "extras" of the larger time units
+  # 
+  # - now build the string
+  #
+  # for each UNIT of time that's greater than 1:
+  #     if it's not the first loop iteration:
+  #         append ", " to the string
+  #     else:
+  #         1. convert the DURATION to STR
+  #         2. split DURATION on "."
+  #         3. append the left part (the whole number) to the string
+  #         4. append the UNIT to the string
+  #
+  # ...but if that's no UNITs, then we just started so
+  # set the string to "just now"
+  #
+  # see https://community.home-assistant.io/t/convert-seconds-to-days-hours-minutes/23152/24
+  # and https://www.home-assistant.io/integrations/template/
+  #
+  # the code creates a virtual sensor "Temps de fonctionnement cumulé" 
+  #
+template:
+  - sensor:
+      - name: 'Pump controler running time'
+  #      pump_ctrl_runtime_friendly:
+  #      friendly_name: 'Temps de fonctionnement cumulé'
+        state: >
+          {% set uptime = states('sensor.pump_controler_cumulative_running_time') | float %}
+          {% set sep     = ', ' %}
+          {% set TIME_MAP = {
+            'w': (uptime / 604800) % 604800,
+            'd': (uptime / 86400) % 7,
+            'h': (uptime / 3600) % 24,
+            'm': (uptime / 60) % 60,
+            's': (uptime % 60)
+          }
+          %}
+
+          {% for unit, duration in TIME_MAP.items() if duration >= 1 %}
+            {% if not loop.first %}
+                  {{ sep }}
+            {% endif %}
+                  
+            {{ (duration | string).split('.')[0] }} {{ unit }}
+
+            # optionnal to add a 's' in case of week/weeks ...
+            # {% if duration >= 2 %}
+            #  s
+            # {% endif %}
+          {% endfor %}
+
+          {% if uptime < 1 %}
+            just now
+          {% endif %}
+  - sensor:
+      - name: 'Pump controler events'
+        state: >
+          {{ states('sensor.pump_controler_event') }}
