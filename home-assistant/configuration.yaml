@@ -1,0 +1,544 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+homeassistant:
+  external_url: "https://pronoe-test.duckdns.org"
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+duckdns:
+  domain: !secret domain_name
+  access_token: !secret my_access_token
+
+http:
+  ssl_certificate: /etc/letsencrypt/live/pronoe-test.duckdns.org/fullchain.pem
+  ssl_key: /etc/letsencrypt/live/pronoe-test.duckdns.org/privkey.pem
+
+# A Home Assistant integration to turn your browser into a controllable entity - and also an audio player and a security camera (WIP).
+browser_mod:
+  devices:
+    90670561-875c9add:
+      name: pc_pat_chrome
+    bc1cf387-ce019135:
+      name: tel_pat_ha
+    9285a199-2e8ee9b8:
+      name: pad_lenovo_ha
+    ac7486af-be959a12:
+      name: pad_lenovo_chrome
+  resources:
+    - url: /browser_mod.js
+      type: module
+
+mqtt:
+  broker: 192.168.0.117
+  port: 8883
+  client_id: 'hass'
+  keepalive: 60
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+
+google_assistant:
+  project_id: myhomeassistant-ffc5e
+  service_account: !include myhomeassistant-ffc5e-ba8e6716b78a.json
+  report_state: true
+  exposed_domains:
+     - light
+     - button
+     - sensor
+  entity_config:
+    light.lampe_patrick:
+      expose: false
+      room: CHAMBRE_PAT
+    light.a60_rvb_cct_2:
+      expose: false
+      room: BUREAU
+    button.pump_activation:
+      expose: true
+      name: ALLUME_POMPE
+      room: PISCINE
+    button.pump_stop:
+      expose: true
+      name: STOP_POMPE
+      room: PISCINE
+    button.google_info_meteo:
+      expose: true
+      name: STATION_METEO
+      room: SALON
+
+dialogflow:
+
+intent_script:
+  Netatmo:
+    speech:
+      text: >
+        Le niveau de CO2 est {{ states('sensor.netatmo_maison_nancras_indoor_co2') }} ppm !
+        La température extérieure est de {{ states('sensor.netatmo_maison_nancras_indoor_exterieur_temperature') }} degré
+
+recorder:
+  auto_purge: true
+  commit_interval: 10
+  purge_keep_days: 30
+  purge_interval: 2
+  exclude:
+    domains:
+      - automation
+      - weblink
+      - updater
+      - light
+      - script
+    entity_globs:
+      - button.*
+    entities:
+      - binary_sensor.rpi_power_status
+      - sensor.90670561_875c9add
+
+sensor:
+  - platform: command_line
+    name: SSL cert expiry
+    unit_of_measurement: days
+    scan_interval: 10800
+    command: "cat /config/ssl-days.txt | awk '{ print $NF }'"
+    # note: a cron script running every hour puts in ssl-days.txt the result of command
+    # ssl-cert-check -b -c /etc/letsencrypt/live/pronoe-test.duckdns.org/cert.pem
+  - platform: mqtt
+    name: 'Date/heure'
+    state_topic: 'SW/CONTROLER/RUNNING_TIME'
+    unit_of_measurement: ""
+    value_template: "{{ value_json.Time }}"
+  - platform: mqtt
+    name: 'Pump controler: date and time of last power ON or restart'
+    state_topic: 'SW/CONTROLER/RUNNING_TIME'
+    unit_of_measurement: ''
+    value_template: "{{ value_json.Last_power_ON_date_and_time }}"
+  - platform: mqtt
+    name: 'Pump controler cumulative running time'
+    state_topic: 'SW/CONTROLER/RUNNING_TIME'
+    unit_of_measurement: 's'
+    value_template:  "{{ value_json.Power_ON.Cumulative }}"
+  - platform: mqtt
+    name: 'Pump controler: current running time'
+    state_topic: 'SW/CONTROLER/RUNNING_TIME'
+    unit_of_measurement: 's'
+    value_template: "{{ value_json.Power_ON.Current }}"
+  - platform: mqtt
+    name: 'Pump controler: previous sequence running time'
+    state_topic: 'SW/CONTROLER/RUNNING_TIME'
+    unit_of_measurement: 's'
+    value_template: "{{ value_json.Power_ON.Previous }}"
+  - platform: mqtt
+    name: 'Pump controler: before previous sequence running time'
+    state_topic: 'SW/CONTROLER/RUNNING_TIME'
+    unit_of_measurement: 's'
+    value_template: "{{ value_json.Power_ON.Before_previous }}"
+  - platform: mqtt
+    name: 'Pump controler: number of power ON or restart'
+    state_topic: 'SW/CONTROLER/RUNNING_TIME'
+    unit_of_measurement: ''
+    value_template: "{{ value_json.Power_ON.Number }}"
+  - platform: mqtt
+    name: "Pool water temperature"
+    state_topic: "SW/WATER/TEMP"
+    unit_of_measurement: '°C'
+  - platform: mqtt
+    name: "Pump last day running time"
+    state_topic: "SW/PUMP/RUNNING_TIME"
+    unit_of_measurement: 'mn'
+  - platform: mqtt
+    name: "Pump mean running time"
+    state_topic: "SW/PUMP/MEAN_RUNNING_TIME"
+    unit_of_measurement: 'mn'
+  - platform: mqtt
+    name: "Pool water temp drift"
+    state_topic: "SW/WATER/TEMP_DRIFT"
+    unit_of_measurement: '°C/h'  
+  - platform: mqtt
+    name: "Pool water ref temp"
+    state_topic: "SW/WATER/TEMP_REF"
+    unit_of_measurement: '°C'    
+  - platform: mqtt
+    name: "Pump controler event"
+    state_topic: "SW/CONTROLER/EVENT"
+  - platform: mqtt
+    name: 'Pump controler: number of WiFi disconnect'
+    state_topic: 'SW/CONTROLER/WIFI_INFO'
+    unit_of_measurement: ''
+    value_template: "{{ value_json.Wifi_info.Wifi_disconnect }}"
+  - platform: mqtt
+    name: 'Pump controler: RSSI'
+    state_topic: 'SW/CONTROLER/WIFI_INFO'
+    unit_of_measurement: 'dBm'
+    value_template: "{{ value_json.Wifi_info.RSSI }}"
+  - platform: mqtt
+    name: 'Pump controler: SSID'
+    state_topic: 'SW/CONTROLER/WIFI_INFO'
+    unit_of_measurement: ''
+    value_template: "{{ value_json.Wifi_info.SSID }}"
+  - platform: mqtt
+    name: 'Pump controler: channel'
+    state_topic: 'SW/CONTROLER/WIFI_INFO'
+    unit_of_measurement: ''
+    value_template: "{{ value_json.Wifi_info.Channel }}"
+# pump running time information
+  - platform: mqtt
+    name: 'Pump filtered temperature'
+    state_topic: 'SW/PUMP/INFO'
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json.Filtered_WT }}"
+  - platform: mqtt
+    name: 'Heat pump target temperature'
+    state_topic: 'SW/PUMP/INFO'
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json.PAC_WT }}"
+  - platform: mqtt
+    name: Test water temperature'
+    state_topic: 'SW/PUMP/INFO'
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json.TEST_WT }}"
+  - platform: mqtt
+    name: 'Pump current RT'
+    state_topic: 'SW/PUMP/INFO'
+    unit_of_measurement: 'mn'
+    value_template: "{{ value_json.PRT.Day }}"
+  - platform: mqtt
+    name: 'Pump previous RT'
+    state_topic: 'SW/PUMP/INFO'
+    unit_of_measurement: 'mn'
+    value_template: "{{ value_json.PRT.PreviousDay }}"
+  - platform: mqtt
+    name: 'Pump scheduled RT'
+    state_topic: 'SW/PUMP/INFO'
+    unit_of_measurement: 'mn'
+    value_template: "{{ value_json.PRT.Scheduled }}"
+  - platform: mqtt
+    name: 'Pump cumulative RT'
+    state_topic: 'SW/PUMP/INFO'
+    unit_of_measurement: 'h'
+    value_template: "{{ value_json.PRT.Cumulative }}"
+  - platform: mqtt
+    name: 'Pump mean RT over 7 days'
+    state_topic: 'SW/PUMP/INFO'
+    unit_of_measurement: 'mn'
+    value_template: "{{ value_json.PRT.Mean_Day }}"
+# pump and controler status
+  - platform: mqtt
+    name: 'Pump mode'
+    state_topic: 'SW/CONTROLER/STATE'
+    unit_of_measurement: ''
+    value_template: "{{ value_json.STATUS.Mode }}"
+  - platform: mqtt
+    name: 'Pump window running'
+    state_topic: 'SW/CONTROLER/STATE'
+    unit_of_measurement: ''
+    value_template: "{{ value_json.STATUS.Window }}"
+  - platform: mqtt
+    name: 'Pump ON manual'
+    state_topic: 'SW/CONTROLER/STATE'
+    unit_of_measurement: ''
+    value_template: "{{ value_json.STATUS.ON_man }}"
+  - platform: mqtt
+    name: 'Pump OFF manual'
+    state_topic: 'SW/CONTROLER/STATE'
+    unit_of_measurement: ''
+    value_template: "{{ value_json.STATUS.OFF_man }}"
+  - platform: mqtt
+    name: 'Controler test mode'
+    state_topic: 'SW/CONTROLER/STATE'
+    unit_of_measurement: ''
+    value_template: "{{ value_json.STATUS.Test_mode }}"
+  - platform: mqtt
+    name: 'Heat pump automation'
+    state_topic: 'SW/CONTROLER/STATE'
+    unit_of_measurement: ''
+    value_template: "{{ value_json.STATUS.PAC_auto }}"
+  - platform: mqtt
+    name: 'Pump continuous run'
+    state_topic: 'SW/CONTROLER/STATE'
+    unit_of_measurement: ''
+    value_template: "{{ value_json.STATUS.Cont_run }}"
+  - platform: mqtt
+    name: 'Reference measurement'
+    state_topic: 'SW/CONTROLER/STATE'
+    unit_of_measurement: ''
+    value_template: "{{ value_json.STATUS.Ref_mes }}"
+
+binary_sensor:
+  - platform: mqtt
+    name: 'Pool filtering pump state'
+    state_topic: 'SW/CONTROLER/STATE'
+    payload_on: "ON"
+    payload_off: "OFF"
+    device_class: running
+    value_template: "{{ value_json.STATUS.Pump }}"
+  - platform: mqtt
+    name: 'PAC auto'
+    state_topic: 'SW/CONTROLER/STATE'
+    payload_on: "Active"
+    payload_off: "Inactive"
+    # device_class: none
+    value_template: "{{ value_json.STATUS.PAC_auto }}"
+  - platform: mqtt
+    name: 'Test mode'
+    state_topic: 'SW/CONTROLER/STATE'
+    payload_on: "Active"
+    payload_off: "Inactive"
+    # device_class: none
+    value_template: "{{ value_json.STATUS.Test_mode }}"
+  - platform: mqtt
+    name: 'Continuous run'
+    state_topic: 'SW/CONTROLER/STATE'
+    payload_on: "Active"
+    payload_off: "Inactive"
+    # device_class: none
+    value_template: "{{ value_json.STATUS.Cont_run }}"
+  - platform: mqtt
+    name: 'Continuous stop'
+    state_topic: 'SW/CONTROLER/STATE'
+    payload_on: "Active"
+    payload_off: "Inactive"
+    # device_class: none
+    value_template: "{{ value_json.STATUS.Cont_stop }}"
+  - platform: mqtt
+    name: 'Water reference measurement'
+    state_topic: 'SW/CONTROLER/STATE'
+    payload_on: "Active"
+    payload_off: "Inactive"
+    # device_class: none
+    value_template: "{{ value_json.STATUS.Ref_mes }}"
+  - platform: mqtt
+    name: 'Pump forced ON'
+    state_topic: 'SW/CONTROLER/STATE'
+    payload_on: "Active"
+    payload_off: "Inactive"
+    # device_class: none
+    value_template: "{{ value_json.STATUS.ON_man }}"
+  - platform: mqtt
+    name: 'Pump forced OFF'
+    state_topic: 'SW/CONTROLER/STATE'
+    payload_on: "Active"
+    payload_off: "Inactive"
+    # device_class: none
+    value_template: "{{ value_json.STATUS.OFF_man }}"
+  - platform: mqtt
+    name: 'Google say meteo'
+    state_topic: 'GOOGLE/REQUEST'
+    payload_on: "METEO"
+    payload_off: "OFF"
+  - platform: command_line
+    name: "Ping MQTT'"
+    command: 'ping -W 1 -c 1 192.168.0.117 > /dev/null 2>&1 && echo success || echo fail'
+    device_class: connectivity
+    payload_on: "success"
+    payload_off: "fail"
+
+button:
+  - platform: mqtt
+    name: "Pump activation"
+    command_topic: "SW/PUMP/CMD"
+    qos: 0
+    retain: false
+    payload_press: "ON"
+  - platform: mqtt
+    name: "Pump stop"
+    command_topic: "SW/PUMP/CMD"
+    qos: 0
+    retain: false
+    payload_press: "OFF"
+  - platform: mqtt
+    name: "PAC auto on"
+    command_topic: "SW/CONTROLER/CMD"
+    qos: 0
+    retain: false
+    payload_press: "{\"PAC_AUTO\":\"ON\"}"
+  - platform: mqtt
+    name: "PAC auto off"
+    command_topic: "SW/CONTROLER/CMD"
+    qos: 0
+    retain: false
+    payload_press: "{\"PAC_AUTO\":\"OFF\"}"
+  - platform: mqtt
+    name: "Cont run on"
+    command_topic: "SW/CONTROLER/CMD"
+    qos: 0
+    retain: false
+    payload_press: "{\"CONT_RUN\":\"ON\"}"
+  - platform: mqtt
+    name: "Cont run off"
+    command_topic: "SW/CONTROLER/CMD"
+    qos: 0
+    retain: false
+    payload_press: "{\"CONT_RUN\":\"OFF\"}"
+  - platform: mqtt
+    name: "Cont stop on"
+    command_topic: "SW/CONTROLER/CMD"
+    qos: 0
+    retain: false
+    payload_press: "{\"CONT_STOP\":\"ON\"}"
+  - platform: mqtt
+    name: "Cont stop off"
+    command_topic: "SW/CONTROLER/CMD"
+    qos: 0
+    retain: false
+    payload_press: "{\"CONT_STOP\":\"OFF\"}"
+  - platform: mqtt
+    name: "Test on"
+    command_topic: "SW/CONTROLER/CMD"
+    qos: 0
+    retain: false
+    payload_press: "{\"TEST\":\"ON\"}"
+  - platform: mqtt
+    name: "Test off"
+    command_topic: "SW/CONTROLER/CMD"
+    qos: 0
+    retain: false
+    payload_press: "{\"TEST\":\"OFF\"}"
+  - platform: mqtt
+    name: "Pump MQTT reset"
+    command_topic: "SW/PUMP/CMD"
+    qos: 0
+    retain: false
+    payload_press: "ignore"
+  - platform: mqtt
+    name: "Google info meteo"
+    command_topic: "GOOGLE/REQUEST"
+    qos: 0
+    retain: false
+    payload_press: "METEO"
+
+switch:
+  - platform: template
+    switches:
+      pac:
+        value_template: "{{ is_state('binary_sensor.pac_auto', 'on') }}"
+        turn_on:
+          - service: button.press
+            target:
+              entity_id: button.pac_auto_on
+        turn_off:
+          - service: button.press
+            target:
+              entity_id: button.pac_auto_off
+      cont_run:
+        value_template: "{{ is_state('binary_sensor.continuous_run', 'on') }}"
+        turn_on:
+          - service: button.press
+            target:
+              entity_id: button.cont_run_on
+        turn_off:
+          - service: button.press
+            target:
+              entity_id: button.cont_run_off
+      cont_stop:
+        value_template: "{{ is_state('binary_sensor.continuous_stop', 'on') }}"
+        turn_on:
+          - service: button.press
+            target:
+              entity_id: button.cont_stop_on
+        turn_off:
+          - service: button.press
+            target:
+              entity_id: button.cont_stop_off
+      ctrl_test:
+        value_template: "{{ is_state('binary_sensor.test_mode', 'on') }}"
+        turn_on:
+          - service: button.press
+            target:
+              entity_id: button.test_on
+        turn_off:
+          - service: button.press
+            target:
+              entity_id: button.test_off
+  # - platform:
+    # entity_id: button.message_meteo
+  # type: button
+  # name: "message meteo"
+  # action: call-service
+  #   service: tts.google_translate_say
+  #   service_data:
+  #       entity_id: media_player.chromecast_de_beatrice
+  #       message: >-
+  #       Le niveau de CO2 est {{ states('sensor.netatmo_maison_nancras_indoor_co2')
+  #       }} ppm ! La température extérieure est de {{
+  #       states('sensor.netatmo_maison_nancras_indoor_exterieur_temperature') }}
+  #       degré'Bonsoir: ceci est un nouvel essai..'
+  #       language: fr
+
+# NOTE:
+  # - define durations for the various UNITs of time
+  #   * modulus helps to reduce "extras" of the larger time units
+  # 
+  # - now build the string
+  #
+  # for each UNIT of time that's greater than 1:
+  #     if it's not the first loop iteration:
+  #         append ", " to the string
+  #     else:
+  #         1. convert the DURATION to STR
+  #         2. split DURATION on "."
+  #         3. append the left part (the whole number) to the string
+  #         4. append the UNIT to the string
+  #
+  # ...but if that's no UNITs, then we just started so
+  # set the string to "just now"
+  #
+  # see https://community.home-assistant.io/t/convert-seconds-to-days-hours-minutes/23152/24
+  # and https://www.home-assistant.io/integrations/template/
+  #
+  # the code creates a virtual sensor "Temps de fonctionnement cumulé" 
+  #
+template:
+  - sensor:
+      - name: 'Pump controler running time'
+        state: >
+          {% set uptime = states('sensor.pump_controler_cumulative_running_time') | float %}
+          {% set sep     = '-' %}
+          {% set TIME_MAP = {
+            'w': (uptime / 604800) % 604800,
+            'd': (uptime / 86400) % 7,
+            'h': (uptime / 3600) % 24,
+            'm': (uptime / 60) % 60,
+            's': (uptime % 60)
+          }
+          %}
+
+          {% for unit, duration in TIME_MAP.items() if duration >= 1 %}
+            {% if not loop.first %}
+                  {{sep}}
+            {% endif %}
+                  
+            {{(duration | string).split('.')[0]}} {{unit}}
+            
+          {% endfor %}
+
+          {% if uptime < 1 %}
+            just now
+          {% endif %}
+  - sensor:
+      - name: 'Pump controler events'
+        state: >
+          {{ states('sensor.pump_controler_event') }}
+  - binary_sensor:
+    - name: 'PAC_auto_state'
+      state : >
+        {{ is_state('sensor.heat_pump_automation', 'Active' }}
+
+    # - platform:
+    # entity_id: button.message_meteo
+  # type: button
+  # name: "message meteo"
+  # action: call-service
+  #   service: tts.google_translate_say
+  #   service_data:
+  #       entity_id: media_player.chromecast_de_beatrice
+  #       message: >-
+  #       Le niveau de CO2 est {{ states('sensor.netatmo_maison_nancras_indoor_co2')
+  #       }} ppm ! La température extérieure est de {{
+  #       states('sensor.netatmo_maison_nancras_indoor_exterieur_temperature') }}
+  #       degré'Bonsoir: ceci est un nouvel essai..'
+  #       language: fr 

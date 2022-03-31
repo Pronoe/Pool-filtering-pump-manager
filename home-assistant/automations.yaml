@@ -1,0 +1,68 @@
+ # automation:
+  - alias: 'SSL expiry notification'
+    trigger:
+      platform: numeric_state
+      entity_id: sensor.ssl_cert_expiry
+      below: 21
+    action:
+      service: notify.mobile_app_Galaxy_S8_Pat
+      data:
+        message: 'Warning - SSL certificate expires in 21 days and has not been automatically renewed'
+  - id: '1544483297492'
+    alias: Google say meteo
+    trigger:
+    - payload: 'METEO'
+      platform: mqtt
+      topic: 'GOOGLE/REQUEST'
+    condition: []
+    action:
+    - service: tts.google_translate_say
+      data:
+        language: fr
+        message: >-
+          Le niveau de CO2 est {{ states('sensor.netatmo_maison_nancras_indoor_co2')
+          }} ppm ! La température extérieure est de {{
+          states('sensor.netatmo_maison_nancras_indoor_exterieur_temperature') }}
+          degré
+        entity_id: 
+        - media_player.salon
+        - media_player.90670561_875c9add
+        - media_player.bc1cf387_ce019135
+        - media_player.ac7486af_be959a12
+    - service: browser_mod.toast
+      data:
+        message: Voice message transmitted
+        duration: 2000
+    - service: mqtt.publish
+      data:
+        topic: GOOGLE/REQUEST
+        payload: "OFF"
+        retain: false
+        qos: 2
+  
+  # example of periodic task
+  # - id: '1597611826726'
+  #   alias: Send MQTT PING REQ
+  #   trigger:
+  #   - entity_id: binary_sensor.send_ping_req
+  #     from: 'off'
+  #     platform: state
+  #     to: 'on'
+  #   action:
+  #     - repeat:
+  #         count: 1000
+  #         sequence:
+  #           - service: browser_mod.toast
+  #             data:
+  #               message: PINGREQ transmitted
+  #               duration: 2000
+  #           - service: mqtt.publish
+  #             data:
+  #               topic: PINGREQ
+  #               payload: ""
+  #               retain: false
+  #               qos: 0
+  #           - delay: '00:00:05'
+  #   mode: single
+
+ 

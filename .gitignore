@@ -1,7 +1,10 @@
-Secret.h
+
 .vscode
+archive
 examples
 Issues
-old.vscode
 miscellaneous
-archive
+old.vscode
+DeprecatedCode.h
+MySecrets.h
+secrets.yaml
