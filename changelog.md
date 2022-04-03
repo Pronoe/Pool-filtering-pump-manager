@@ -43,6 +43,11 @@ Author : Patrick Souty
     26/03/2022 : version 3.6 - add permanent pump stop mode (for maintenance purpose)
                                 note: the hardware has been installed in the pump cabinet on 29/03/2022 and successfully tested (high power pump contrôl, WiFi link, pump management)
     31/03/2022 : version 3.7 - add WiFi channel publishing (following an issue with channel switching of the gateway wich gave "beacon lost" detceted by the ESP32 )
+    03/04/2022 : version 3.8 - publish filteredWaterTemp information with 2 significant digits instead of 1 because filtering improves resolution
+                             - reduce number of samples for computing average refWaterTemp, from 60 to 20
+                             - reduce time constant of the temperature filter from 3600 s to 900 s (reason: low level of measurement nois allows to reduce bandwidth)
+                             - add initilization of referenceTemp at startup (reason: incorrect pump scheduled runtime at startup)
+                             - corrects typo errors inside comments
     
     Done steps:
     - test temperature sensor acqusition and libraries - done
