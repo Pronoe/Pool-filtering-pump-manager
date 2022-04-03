@@ -288,8 +288,8 @@ void setup()
   Serial.printf("DS18B20 sensor initial temperature = %.2f ºC \n", temperature_Celsius);
   currentWaterTemp = temperature_Celsius;
   filteredWaterTemp = temperature_Celsius;
-  refWaterTemp = temperature_Celsius;
-
+  refWaterTemp = temperature_Celsius;   // used for heat automation decision
+  referenceTemp = temperature_Celsius;  // used for activation window duration definition and pump mode decision 
   // init time management
   initTimeManagement();
   datePowerUp = dateAndTime();
@@ -342,7 +342,7 @@ void loop()
   {
     lastShortTime = loopTime;
     blinkLed();
-    // processes water temperature reference measurments when triggered
+    // processes water temperature reference measurements when triggered
     if (triggerRefMeasurement && ((loopTime - triggerTime) > waterFlowDelay))
     {
       getDS18B20Readings();
@@ -352,6 +352,8 @@ void loop()
       {
         refWaterTemp /= maxRefMeasumentCount;
         triggerRefMeasurement = false;
+        if (!pumpShouldBeOn)
+          pumpOFF();    // switches OFF immediatly the pump if it should not be ON for other reason to avoid 1 mn in excess count of the running time
         // computes water temp drift in °C/hour and publish information through MQTT
         hourWaterTempDrift = (refWaterTemp - lastRefWaterTemp) / float(loopTime - lastRefTime) * float(hourlyPeriod);
         bootstrapManager.publish(WATER_TEMP_DRIFT, helper.string2char(String(hourWaterTempDrift, 2)), true);
@@ -414,7 +416,7 @@ void loop()
         requestRefMeasurement = false;
         triggerTime = loopTime;    // saves the current time
         refWaterTemp = 0;          // initialize an accumulator for water temperature measurement
-        refMeasurementCounter = 0; // resets measurment counter
+        refMeasurementCounter = 0; // resets measurement counter
         pumpON();
       }
     // Ping gateway to add presence on the routing table,
@@ -936,7 +938,7 @@ void sendPumpInfo()
   JsonObject root = bootstrapManager.getJsonObject();
 
   root["Time"] = serialized(jsonString(dateAndTime()));
-  root["Filtered_WT"] = myRound(filteredWaterTemp, 1);
+  root["Filtered_WT"] = myRound(filteredWaterTemp, 2);
   root["PAC_WT"] = myRound(PACTempTarget, 1);
   root["TEST_WT"] = myRound(waterTempTest, 1);
   JsonObject PRT = root.createNestedObject("PRT"); // PTR stands for 'Pump Running Time'

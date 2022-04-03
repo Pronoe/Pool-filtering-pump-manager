@@ -234,13 +234,13 @@ float hourWaterTempDrift;               // water temperature change over the las
 float dayWaterTempDrift;                // water temperature change over the last day in °C
 float waterTempTest = 28.0;             // dummy water temp for tests
 boolean triggerRefMeasurement = false;  // activated each hour to manage water temperature measurement with water flow activaed
-boolean requestRefMeasurement = false; // flag to trigger a reference measurement
+boolean requestRefMeasurement = false;  // flag to trigger a reference measurement
 float refWaterTemp;                     // used for reference water temperature measurement
-float lastRefWaterTemp;                // reference water temp saved nominally each hour
-uint32_t lastRefTime;                  // time in ms of last reference measurement
+float lastRefWaterTemp;                 // reference water temp saved nominally each hour
+uint32_t lastRefTime;                   // time in ms of last reference measurement
 uint32_t triggerTime;                   // records time of measurement trigger activation
 int refMeasurementCounter;              //
-#define maxRefMeasumentCount 60         // number of temperature measurements required for setting a reference measurement based on average value
+#define maxRefMeasumentCount 20         // number of temperature measurements required for setting a reference measurement based on average value
 const uint32_t waterFlowDelay = 300000; // preliminary duration for pump activation before reference measurement - in ms =>
 
 boolean ctrlTest = false; // enable/disable test mode of the pump controller
@@ -253,7 +253,7 @@ boolean justStarted;           // allows specific actions at startup in the main
 // definitions for digital filter of water temperature
 // IIR digital filter order 1 - definition: s = z^(-1) x s + filterCoef * (x - z^(-1) * s)
 // filterCoef = 1 / (filterTimeConstant * samplingFrequency)
-#define filterTimeConstant 3600. // time constant in s
+#define filterTimeConstant 900. // time constant in s
 const float filterCoef = float(refreshPeriod) / (filterTimeConstant * 1000.);
 //
 // defintions for myPrint function
